@@ -1,0 +1,66 @@
+CLT – Despesas descontadas do salário bruto
+INSS (contribuição previdenciária):
+
+7,5% até R$ 1.412
+
+9% de R$ 1.412,01 até R$ 2.666,68
+
+12% de R$ 2.666,69 até R$ 4.000,03
+
+14% de R$ 4.000,04 até R$ 7.786,02
+(progressivo por faixa salarial)
+
+IRRF (Imposto de Renda Retido na Fonte):
+
+0% até R$ 2.259,20 (isento)
+
+7,5% a 27,5% conforme base de cálculo (salário bruto – INSS – dependentes)
+
+Dedução por dependente: R$ 189,59
+
+Vale-transporte: até 6% do salário base
+(se fornecido pela empresa)
+
+Vale-alimentação/refeição: valor variável
+(se houver coparticipação do trabalhador)
+
+Plano de saúde/odontológico: valor variável
+(caso haja desconto de coparticipação)
+
+Contribuição sindical: opcional e anual
+(geralmente equivalente a 1 dia de trabalho)
+
+Descontos por faltas, atrasos ou adiantamentos salariais
+
+PJ – Despesas deduzidas da receita bruta
+Imposto pelo regime Simples Nacional:
+
+6% a 15,5% para serviços no Anexo III
+
+15,5% a 22,9% para serviços no Anexo V
+(varia conforme faturamento anual e fator R)
+
+INSS sobre o pró-labore: 11%
+(mínimo obrigatório sobre o valor declarado de pró-labore)
+
+IRPF (Imposto de Renda Pessoa Física):
+
+Incide sobre o pró-labore
+(mesmas faixas do CLT após INSS e deduções)
+
+Contador: valor fixo mensal (média entre R$ 150 e R$ 500)
+
+Certificado digital: valor anual (média R$ 150 a R$ 300)
+
+Plano de saúde, odontológico, previdência privada: valor opcional, 100% pago pelo PJ
+
+Reserva para férias e 13º salário: valor sugerido de 1/12 (≈8,33%) por item
+(autogestão)
+
+Taxas da conta bancária PJ: valor fixo mensal (opcional)
+
+Aluguel de sala ou coworking (se aplicável): valor variável
+
+Licenças municipais, taxas da prefeitura, emissões de nota fiscal: valor variável por cidade
+
+Seguro profissional (em algumas áreas): valor opcional
