@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+import plotly.express as px
 
 # Initialize session state for tax rates and parameters
 if 'tax_rates' not in st.session_state:
@@ -183,4 +185,103 @@ st.info("""
 - Para PJ, considere reservas para férias, 13º e benefícios
 - Consulte um contador para análises mais precisas
 - Os valores não incluem benefícios como plano de saúde, VA/VR, etc.
-""") 
+""")
+
+st.write("## PJ Sempre Vale a Pena?")
+st.write("""
+A resposta é: não necessariamente. A escolha entre CLT e PJ é mais complexa do que simplesmente comparar o valor líquido recebido no final do mês.
+
+### Por que Existe um Ponto de Equilíbrio?
+
+Em salários mais baixos, o regime CLT tende a ser mais vantajoso por diversos fatores:
+- As alíquotas de INSS e IRRF são progressivas, sendo menores para salários baixos
+- O custo fixo do contador para PJ tem maior impacto em salários menores
+- Benefícios como vale-transporte e vale-refeição têm maior peso relativo
+
+Por outro lado, conforme o salário aumenta:
+- As alíquotas de impostos na CLT crescem progressivamente
+- O impacto do custo fixo do contador diminui proporcionalmente
+- O Simples Nacional do PJ mantém uma alíquota mais estável
+
+### O Ponto de Virada
+
+Nossos cálculos mostram que existe um "ponto de equilíbrio" próximo aos R$ 4.000,00 brutos. 
+A partir desse valor, o regime PJ começa a se tornar financeiramente mais atrativo, mas é crucial considerar outros fatores além do valor líquido:
+- Necessidade de disciplina para guardar reservas
+- Ausência de benefícios como FGTS e seguro-desemprego
+- Responsabilidade com obrigações fiscais e contábeis
+
+### Analise o Gráfico
+
+Use os controles abaixo para visualizar a comparação entre os regimes em diferentes faixas salariais e encontre o ponto ideal para seu caso:
+""")
+
+# Adicionar filtros de salário
+st.write("### Filtros do Gráfico")
+col_min, col_max = st.columns(2)
+with col_min:
+    min_salary = st.slider("Salário Bruto Mínimo (R$)", 
+                          min_value=1000.0,
+                          max_value=100000.0,
+                          value=2500.0,
+                          step=500.0,
+                          format="R$ %.2f")
+with col_max:
+    max_salary = st.slider("Salário Bruto Máximo (R$)",
+                          min_value=min_salary,  # Valor mínimo é o salário mínimo selecionado
+                          max_value=100000.0,
+                          value=5000.0,
+                          step=500.0,
+                          format="R$ %.2f")
+
+# Carregar e exibir o gráfico de comparação
+try:
+    df = pd.read_csv('salary_comparison.csv')
+    
+    # Filtrar os dados pelo intervalo selecionado
+    df_filtered = df[(df['bruto'] >= min_salary) & (df['bruto'] <= max_salary)]
+    
+    # Criar gráfico de comparação
+    fig = px.line(df_filtered, 
+                  x='bruto', 
+                  y=['clt', 'pj'],
+                  title='Comparação CLT x PJ por Faixa Salarial',
+                  labels={
+                      'bruto': 'Salário Bruto (R$)',
+                      'value': 'Salário Líquido (R$)',
+                      'variable': 'Regime'
+                  })
+    
+    # Personalizar o gráfico
+    fig.update_layout(
+        hovermode='x',
+        legend_title_text='Regime',
+        showlegend=True
+    )
+    
+    # Atualizar nomes das linhas na legenda
+    fig.for_each_trace(lambda t: t.update(name='CLT' if t.name == 'clt' else 'PJ'))
+    
+    # Exibir o gráfico
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Encontrar o ponto de equilíbrio
+    df['diff'] = abs(df['clt'] - df['pj'])
+    equilibrio = df.loc[df['diff'].idxmin()]
+    
+    st.write(f"""
+    **Ponto de Equilíbrio:**
+    - Salário Bruto: R$ {equilibrio['bruto']:.2f}
+    - Salário Líquido CLT: R$ {equilibrio['clt']:.2f}
+    - Salário Líquido PJ: R$ {equilibrio['pj']:.2f}
+    """)
+    
+except FileNotFoundError:
+    st.warning("""
+    Arquivo de comparação não encontrado. Execute o script generate_data.py para gerar os dados de comparação.
+    ```bash
+    python generate_data.py
+    ```
+    """)
+except Exception as e:
+    st.error(f"Erro ao carregar o gráfico: {str(e)}") 
